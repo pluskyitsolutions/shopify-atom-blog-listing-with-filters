@@ -1,0 +1,50 @@
+{%- comment -%}
+  Custom Blog Listing via Atom Feed + Filters
+{%- endcomment -%}
+
+
+<div class="blog-section">
+  <div class="page-title">
+    {% render 'breadcrumbs-custom' %}
+    <h1 class="label">{{ page.title }}</h1>
+  </div>
+
+  <div class="blog-filters">
+    <button class="blog-filter-button active" data-blog="all">All</button>
+    {% for block in section.blocks %}
+      {% assign h = block.settings.blog %}
+      {% if blogs[h] %}
+        <button class="blog-filter-button" data-blog="{{ h }}">
+          {{ blogs[h].title }}
+        </button>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div id="blog-posts-grid">
+    <p>Loading posts…</p>
+  </div>
+
+  <!-- Pagination controls -->
+  <div id="blog-pagination" style="display:none; justify-content:center; gap:1rem; margin-top:2rem;">
+    <button id="prevPage" disabled>Previous</button>
+    <button id="nextPage" disabled>Next</button>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Custom Blog Listing",
+  "blocks": [
+    {
+      "type": "blog_selector",
+      "name": "Blog",
+      "settings": [
+        { "type": "blog", "id": "blog", "label": "Select which blog to include" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Blog Listing" }]
+}
+{% endschema %}
